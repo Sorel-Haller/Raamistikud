@@ -13,7 +13,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { MoreVertical } from 'lucide-vue-next';
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/registry/default/ui/pagination'
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Posts', 
@@ -33,8 +41,32 @@ type Post = {
     updated_at_formated: string;
 }
 
+interface PaginationLink {
+  url: string | null;
+  label: string;
+  page?: number | null;
+  active: boolean;
+}
+
+interface PaginatedResponse {
+  current_page: number;
+  data: Post[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLink[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+}
+
+
 defineProps<{
-    posts: Post[]
+    posts: PaginatedResponse
 }>()
 
 </script>
@@ -62,7 +94,7 @@ defineProps<{
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow v-for="post in posts" :key="post.id">
+                            <TableRow v-for="post in posts.data" :key="post.id">
                                 <TableCell class="font-medium">{{ post.id }}</TableCell>
                                 <TableCell>{{ post.title }}</TableCell>
                                 <TableCell>{{ post.author }}</TableCell>
@@ -87,6 +119,25 @@ defineProps<{
                             </TableRow>
                         </TableBody>
                     </Table>
+                    <Pagination v-slot="{ page }" :items-per-page="10" :total="30" :default-page="2">
+                        <PaginationContent v-slot="{ items }">
+                        <PaginationPrevious />
+
+                        <template v-for="(item, index) in items" :key="index">
+                            <PaginationItem
+                            v-if="item.type === 'page'"
+                            :value="item.value"
+                            :is-active="item.value === page"
+                            >
+                            {{ item.value }}
+                            </PaginationItem>
+                        </template>
+
+                        <PaginationEllipsis :index="4" />
+
+                        <PaginationNext />
+                        </PaginationContent>
+                    </Pagination>
             </div>
         </div>
     </AppLayout>
