@@ -72,7 +72,7 @@ defineProps<{
                                 <TableCell>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger>
-                                            <<Button size="icon" variant="ghost">
+                                            <Button size="icon" variant="ghost">
                                                 <MoreVertical />
                                             </Button>
                                         </DropdownMenuTrigger>
