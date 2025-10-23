@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -19,14 +20,14 @@ class Post extends Model
         'updated_at_formated',
     ];
 
-    public function getExcerptAttribute()
+    protected function createdAtFormated(): Attribute
     {
         return Attribute::make(
             get: fn() =>$this->created_at?->diffForHumans()
         );
     }
 
-    public function updatedAtFormated ()
+    protected function updatedAtFormated(): Attribute
     {
         return Attribute::make(
             get: fn() =>$this->updated_at?->diffForHumans()
