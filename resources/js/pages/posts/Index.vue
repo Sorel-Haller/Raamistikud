@@ -2,7 +2,7 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, router, useForm } from '@inertiajs/vue3';
 import { index } from '@/routes/posts';
 import {
   DropdownMenu,
@@ -22,6 +22,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Posts', 
@@ -119,8 +120,16 @@ defineProps<{
                             </TableRow>
                         </TableBody>
                     </Table>
-                    <Pagination v-slot="{ page }" :items-per-page="10" :total="30" :default-page="2">
-                        <PaginationContent v-slot="{ items }">
+
+                    <Pagination 
+                        class="w-full"
+                        :page="posts.current_page"
+                        v-slot="{ page }" 
+                        :items-per-page="posts.per_page" 
+                        :total="posts.total"
+                        @update:page="(page) => router.get(index().url, { page })"
+                        :default-page="2">
+                        <PaginationContent v-slot="{ items } ">
                         <PaginationPrevious />
 
                         <template v-for="(item, index) in items" :key="index">
@@ -133,7 +142,7 @@ defineProps<{
                             </PaginationItem>
                         </template>
 
-                        <PaginationEllipsis :index="4" />
+                        <PaginationEllipsis :index="6" />
 
                         <PaginationNext />
                         </PaginationContent>
