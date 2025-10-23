@@ -4,6 +4,9 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/vue3';
 import { index } from '@/routes/posts';
+import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
+import DropdownMenuSeparator from '@/components/ui/dropdown-menu/DropdownMenuSeparator.vue';
+import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -35,16 +38,51 @@ defineProps<(
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-            <div class="max-w-2xl h-full mx-auto w-full">
-                <ul>
-                    <li v-for="post in posts" :key="post.id" class="mb-4 p-4 border rounded-lg">
-                        <li v-for="(post, index) in posts" :key="index">
-                            {{ post.title }}
-                        </li>
-                    </li>
-                    <table>
-
-                    </table>
+            <div class="max-w-2xl flex flex-1 flex-col h-full mx-auto w-full overwlow-x-auto rounded-xl p-4">
+                    <Table>
+                        <TableCaption>
+                            Recently edited posts
+                        </TableCaption>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead class="w-[180px]">Id</TableHead>
+                                <TableHead>Title</TableHead>
+                                <TableHead>Author</TableHead>
+                                <TableHead class="text-right">Created at</TableHead>
+                                <TableHead class="text-right">Updated at</TableHead>
+                                <TableHead class="text-right">Published</TableHead>
+                                <TableHead>
+                                    <span class="sr-only">Actions</span>    
+                                </TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            <TableRow v-for="post in posts" :key="post.id">
+                                <TableCell class="font-medium">{{ post.id }}</TableCell>
+                                <TableCell>{{ post.title }}</TableCell>
+                                <TableCell>{{ post.author }}</TableCell>
+                                <TableCell>{{ post.created_at_formated }}</TableCell>
+                                <TableCell>{{ post.updated_at_formated }}</TableCell>
+                                <TableCell>{{ post.published }}</TableCell>
+                                <TableCell>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <button size="icon" variant="ghost">
+                                                <MoreVertical />
+                                            </button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent>
+                                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                            <DropdownMenuSeparator/>
+                                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                                            <DropdownMenuItem>Billing</DropdownMenuItem>        
+                                            <DropdownMenuItem>Team</DropdownMenuItem>        
+                                            <DropdownMenuItem>Subscription</DropdownMenuItem>        
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
             </div>
         </div>
     </AppLayout>
