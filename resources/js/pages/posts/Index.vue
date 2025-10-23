@@ -78,6 +78,7 @@ defineProps<(
                                             <DropdownMenuItem class="text-destructive">Delete</DropdownMenuItem>        
                                         </DropdownMenuContent>
                                     </DropdownMenu>
+                                </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
