@@ -21,7 +21,7 @@ import {
   PaginationItem,
   PaginationNext,
   PaginationPrevious,
-} from '@/registry/default/ui/pagination'
+} from '@/components/ui/pagination';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Posts', 
