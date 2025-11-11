@@ -2,7 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { create, store } from '@/routes/posts';
 import { type BreadcrumbItem } from '@/types';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, router } from '@inertiajs/vue3';
 import Label from '@/components/ui/label/Label.vue';
 import Input from '@/components/ui/input/Input.vue';
 import Switch from '@/components/ui/switch/Switch.vue';
@@ -25,9 +25,19 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(store().url)
-}
+    form.post(store().url);
+};
 
+const destroy = () => {
+    if (confirm('Are you sure you want to delete this post?')) {
+        router.delete(store().url, {
+            onSuccess: () => {
+                // Redirect to posts index after deletion
+                router.visit('/posts');
+            },
+        });
+    }
+};
 </script>
 
 <template>
@@ -42,27 +52,32 @@ const submit = () => {
                         <div>
                             <Label for="title">Title</Label>
                             <Input class="mt-1" name="title" v-model="form.title" />
-                            <InputError :message="form.errors.title"></InputError>
+                            <InputError :message="form.errors.title" />
                         </div>
                         <div>
                             <Label for="content">Content</Label>
-                            <Textarea class="mt-1" name="title" v-model="form.content" />
-                            <InputError :message="form.errors.content"></InputError>
+                            <Textarea class="mt-1" name="content" v-model="form.content" />
+                            <InputError :message="form.errors.content" />
                         </div>
                         <div>
                             <Label for="author">Author</Label>
-                            <Input class="mt-1" name="title" v-model="form.author" />
-                            <InputError :message="form.errors.author"></InputError>
+                            <Input class="mt-1" name="author" v-model="form.author" />
+                            <InputError :message="form.errors.author" />
                         </div>
-                        <div className="flex items-center space-x-2">
-                            <Switch id="published" />
-                            <Label For="published">Published</Label>
+                        <div class="flex items-center space-x-2">
+                            <Switch id="published" v-model="form.published" />
+                            <Label for="published">Published</Label>
                         </div>
                     </div>
-                    <div class="mt-6 flex justify-end">
+
+                    <div class="mt-6 flex justify-end space-x-2">
                         <Button type="submit">Save</Button>
+                        <Button type="button" class="bg-red-500 hover:bg-red-600" @click="destroy">
+                            Delete
+                        </Button>
                     </div>
                 </form>
+
                 <pre>{{ form }}</pre>
             </div>
         </div>
