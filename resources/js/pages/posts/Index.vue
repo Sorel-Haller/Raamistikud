@@ -23,7 +23,6 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { destroy, edit } from '@/routes/profile';
-import Edit from './Edit.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -116,8 +115,7 @@ defineProps<{
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
                                             <DropdownMenuLabel>View</DropdownMenuLabel>
-                                            <DropdownMenuItem as-child>
-                                                <Link :href="edit(post.id)">Edit</Link></DropdownMenuItem>
+                                            <DropdownMenuItem>Edit</DropdownMenuItem>
                                             <DropdownMenuSeparator/>
                                             <DropdownMenuItem class="text-destructive">Delete</DropdownMenuItem>        
                                         </DropdownMenuContent>
