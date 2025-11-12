@@ -87,11 +87,11 @@ defineProps<{
                         <TableHeader>
                             <TableRow>
                                 <TableHead class="w-[180px]">Id</TableHead>
-                                <TableHead>Title</TableHead>
-                                <TableHead>Author</TableHead>
+                                <TableHead>First Name</TableHead>
+                                <TableHead>Last Name</TableHead>
+                                <TableHead>Date Of Birth</TableHead>
                                 <TableHead class="text-right">Created at</TableHead>
                                 <TableHead class="text-right">Updated at</TableHead>
-                                <TableHead class="text-right">Published</TableHead>
                                 <TableHead>
                                     <span class="sr-only">Actions</span>    
                                 </TableHead>
