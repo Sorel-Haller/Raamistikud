@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -10,6 +11,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('dashboard', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
 Route::get('/test', function() {
     return 'tere';

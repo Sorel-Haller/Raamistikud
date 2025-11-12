@@ -27,7 +27,6 @@ class PostController extends Controller
     {
         return Inertia::render('posts/Create');
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -42,7 +41,6 @@ class PostController extends Controller
         ]));
 
         return redirect()->route('posts.index');
-
     
     }
 
@@ -59,7 +57,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return Inertia::render('posts/Edit');
     }
 
     /**
@@ -67,7 +65,15 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        post::edit($request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+            'author' => 'required|string|max:255',
+            'published' => 'boolean',
+
+        ]));
+
+        return redirect()->route('posts.index');
     }
 
     /**
