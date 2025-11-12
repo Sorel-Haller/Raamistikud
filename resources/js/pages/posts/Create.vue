@@ -32,7 +32,6 @@ const destroy = () => {
     if (confirm('Are you sure you want to delete this post?')) {
         router.delete(store().url, {
             onSuccess: () => {
-                // Redirect to posts index after deletion
                 router.visit('/posts');
             },
         });

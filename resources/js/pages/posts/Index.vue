@@ -22,6 +22,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination';
+import { destroy, edit } from '@/routes/profile';
+import Edit from './Edit.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -65,6 +67,9 @@ interface PaginatedResponse {
   total: number;
 }
 
+const deletePost = (postId: number) => {
+    router.delete(destroy)
+}
 
 defineProps<{
     posts: PaginatedResponse
@@ -111,7 +116,8 @@ defineProps<{
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent>
                                             <DropdownMenuLabel>View</DropdownMenuLabel>
-                                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                                            <DropdownMenuItem as-child>
+                                                <Link :href="edit(post.id)">Edit</Link></DropdownMenuItem>
                                             <DropdownMenuSeparator/>
                                             <DropdownMenuItem class="text-destructive">Delete</DropdownMenuItem>        
                                         </DropdownMenuContent>
