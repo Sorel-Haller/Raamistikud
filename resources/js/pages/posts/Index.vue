@@ -31,11 +31,15 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-type Post = {
+export type Post = {
     id: number;
     title: string;
     content: string;
-    author: string;
+    author: {
+        id: number;
+        first_name: string;
+        last_name: string;
+    };
     published: boolean;
     created_at: string;
     updated_at: string;
@@ -102,7 +106,7 @@ defineProps<{
                             <TableRow v-for="post in posts.data" :key="post.id">
                                 <TableCell class="font-medium">{{ post.id }}</TableCell>
                                 <TableCell>{{ post.title }}</TableCell>
-                                <TableCell>{{ post.author }}</TableCell>
+                                <TableCell>{{ post.author.first_name }} {{ post.author.last_name }}</TableCell>
                                 <TableCell>{{ post.created_at_formated }}</TableCell>
                                 <TableCell>{{ post.updated_at_formated }}</TableCell>
                                 <TableCell>{{ post.published }}</TableCell>

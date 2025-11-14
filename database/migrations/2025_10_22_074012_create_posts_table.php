@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('author', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('author_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('content');
-            $table->string('author');
             $table->boolean('published')->default(false);
             $table->timestamps();
         });

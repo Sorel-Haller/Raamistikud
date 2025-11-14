@@ -20,7 +20,7 @@ class PostController extends Controller
     {
         // Fetch paginated posts (10 per page) and send them to the Inertia frontend page 'posts/Index'
         return Inertia::render('posts/Index', [
-            'posts' => Post::paginate(10),
+            'posts' => Post::with('author_id,first_name,last_name')->paginate(30),
         ]);
     }
 
