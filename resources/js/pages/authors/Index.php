@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { edit, update, show, index } from '@/routes/posts'; 
+import { edit, update, show, index } from '@/routes/authors'; 
 import { type BreadcrumbItem } from '@/types';
 import { Head, useForm, router } from '@inertiajs/vue3';
 import Label from '@/components/ui/label/Label.vue';
@@ -13,7 +13,7 @@ import { NamespaceBody } from 'typescript';
 
 // Props from controller
 defineProps<{
-    post: {
+    Author: {
         id: number;
         first_name: NamespaceBody;
         last_name: NamespaceBody;
@@ -21,29 +21,29 @@ defineProps<{
     };
 }>();
 
-const props = defineProps<{ post: any }>();
+const props = defineProps<{ author: any }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Edit Post',
-        href: edit(props.post.id).url,
+        title: 'Edit Author',
+        href: edit(props.author.id).url,
     },
 ];
 
 const form = useForm({
-    title: props.post.title || '',
-    content: props.post.content || '',
-    author: props.post.author || '',
-    published: props.post.published || false,
+    title: props.author.title || '',
+    content: props.author.content || '',
+    author: props.author.author || '',
+    published: props.author.published || false,
 });
 
 const submit = () => {
-    form.put(update(props.post.id).url);
+    form.put(update(props.author.id).url);
 };
 
 const destroy = () => {
-    if (confirm('Are you sure you want to delete this post?')) {
-        router.delete(update(props.post.id).url, {
+    if (confirm('Are you sure you want to delete this author?')) {
+        router.delete(update(props.author.id).url, {
             onSuccess: () => {
                 router.visit(index().url);
             },
@@ -53,12 +53,12 @@ const destroy = () => {
 </script>
 
 <template>
-    <Head :title="`Edit Post - ${form.title}`" />
+    <Head :title="`Edit Author - ${form.title}`" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="max-w-2xl h-full mx-auto w-full">
-                <h3 class="text-lg font-medium">Edit Post</h3>
+                <h3 class="text-lg font-medium">Edit Author</h3>
                 <form @submit.prevent="submit">
                     <div class="grid gap-4 mt-6">
                         <div>
@@ -89,6 +89,7 @@ const destroy = () => {
                         </Button>
                     </div>
                 </form>
+                
 
                 <pre>{{ form }}</pre>
             </div>

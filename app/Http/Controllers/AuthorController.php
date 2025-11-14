@@ -12,7 +12,9 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('author/Index', [
+            'author' => Author::paginate(10),
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('author/Create');
     }
 
     /**
@@ -28,7 +30,13 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            author::create($request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'date_of_birth' => 'Date',
+        ]));
+
+        return redirect()->route('author.index');
     }
 
     /**
@@ -44,7 +52,7 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        //
+        return Inertia::render('author/Edit');
     }
 
     /**
@@ -52,7 +60,13 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        author::edit($request->validate([
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'date_of_birth' => 'Date',
+        ]));
+
+        return redirect()->route('author.index');
     }
 
     /**

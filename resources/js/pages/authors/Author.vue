@@ -3,7 +3,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router, useForm } from '@inertiajs/vue3';
-import { index } from '@/routes/posts';
+import { index } from '@/routes/author';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,12 +26,12 @@ import { destroy, edit } from '@/routes/profile';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Posts', 
+        title: 'Authors', 
         href: index().url,
     },
 ];
 
-type Post = {
+type Author = {
     id: number;
     first_name: string;
     last_name: string;
@@ -51,7 +51,7 @@ interface PaginationLink {
 
 interface PaginatedResponse {
   current_page: number;
-  data: Post[];
+  data: Author[];
   first_page_url: string;
   from: number;
   last_page: number;
@@ -65,12 +65,12 @@ interface PaginatedResponse {
   total: number;
 }
 
-const deletePost = (postId: number) => {
-    router.delete(`/posts/${postId}`)
+const deleteAuthor = (authorId: number) => {
+    router.delete(`/author/${authorId}`)
 }
 
 defineProps<{
-    posts: PaginatedResponse
+    authors: PaginatedResponse
 }>()
 
 </script>
@@ -82,7 +82,7 @@ defineProps<{
             <div class="max-w-2xl flex flex-1 flex-col h-full mx-auto w-full overwlow-x-auto rounded-xl p-4">
                     <Table>
                         <TableCaption>
-                            Recently edited posts
+                            Recently edited authors
                         </TableCaption>
                         <TableHeader>
                             <TableRow>
@@ -98,13 +98,13 @@ defineProps<{
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            <TableRow v-for="post in posts.data" :key="post.id">
-                                <TableCell class="font-medium">{{ post.id }}</TableCell>
-                                <TableCell>{{ post.first_name }}</TableCell>
-                                <TableCell>{{ post.last_name }}</TableCell>
-                                <TableCell>{{ post.date_of_birth }}</TableCell>
-                                <TableCell>{{ post.created_at_formated }}</TableCell>
-                                <TableCell>{{ post.updated_at_formated }}</TableCell>
+                            <TableRow v-for="author in authors.data" :key="author.id">
+                                <TableCell class="font-medium">{{ author.id }}</TableCell>
+                                <TableCell>{{ author.first_name }}</TableCell>
+                                <TableCell>{{ author.last_name }}</TableCell>
+                                <TableCell>{{ author.date_of_birth }}</TableCell>
+                                <TableCell>{{ author.created_at_formated }}</TableCell>
+                                <TableCell>{{ author.updated_at_formated }}</TableCell>
                                 <TableCell>
                                     <DropdownMenu>
                                         <DropdownMenuTrigger>
@@ -126,10 +126,10 @@ defineProps<{
 
                     <Pagination 
                         class="w-full"
-                        :page="posts.current_page"
+                        :page="authors.current_page"
                         v-slot="{ page }" 
-                        :items-per-page="posts.per_page" 
-                        :total="posts.total"
+                        :items-per-page="authors.per_page" 
+                        :total="authors.total"
                         @update:page="(page) => router.get(index().url, { page })"
                         :default-page="2">
                         <PaginationContent v-slot="{ items } ">
