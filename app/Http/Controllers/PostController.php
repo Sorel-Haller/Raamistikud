@@ -29,8 +29,14 @@ class PostController extends Controller
      */
     public function create()
     {
+<<<<<<< HEAD
         // Render the 'posts/Create' page where users can fill in a form
         return Inertia::render('posts/Create');
+=======
+        return Inertia::render('posts/Create', [
+             'authors' => (Author::all()->mapWithKeys(fn($author) => [$author->id => $authir->first_name.' '.$author->last_name]))
+        ]);
+>>>>>>> 7d26c01 (muutused +added select)
     }
 
     /**

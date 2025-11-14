@@ -9,6 +9,15 @@ import Switch from '@/components/ui/switch/Switch.vue';
 import Button from '@/components/ui/button/Button.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import InputError from '@/components/InputError.vue';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -16,6 +25,9 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: create().url,
     },
 ];
+
+const props = defineProps<{ authors: Record<number, string> }>();   
+console.log(props.authors);
 
 const form = useForm({
     title: '',
@@ -58,6 +70,21 @@ const destroy = () => {
                             <Textarea class="mt-1" name="content" v-model="form.content" />
                             <InputError :message="form.errors.content" />
                         </div>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Select a fruit" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Fruits</SelectLabel>
+                                    <SelectItem value="apple">Apple</SelectItem>
+                                    <SelectItem value="banana">Banana</SelectItem>
+                                    <SelectItem value="blueberry">Blueberry</SelectItem>
+                                    <SelectItem value="grapes">Grapes</SelectItem>
+                                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                                </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         <div>
                             <Label for="author">Author</Label>
                             <Input class="mt-1" name="author" v-model="form.author" />

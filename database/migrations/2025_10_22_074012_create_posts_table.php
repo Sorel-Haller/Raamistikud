@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Author;
 
 return new class extends Migration
 {
@@ -11,9 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('author', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id')->constrained()->onDelete('cascade');
+
+            // Foreign key to authors table
+            $table->foreignIdFor(Author::class)
+                  ->constrained()
+                  ->onDelete('cascade');
+
             $table->string('title');
             $table->text('content');
             $table->boolean('published')->default(false);
